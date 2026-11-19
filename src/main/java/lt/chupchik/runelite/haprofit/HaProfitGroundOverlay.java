@@ -61,7 +61,7 @@ public class HaProfitGroundOverlay extends Overlay
 		if (groundConfig.priceDisplayMode() != PriceDisplayMode.BOTH
 			|| highlightMode == ItemHighlightMode.MENU
 			|| highlightMode == ItemHighlightMode.NONE
-			|| groundConfig.showHighlightedOnly() || plugin.getNatureRunePrice() <= 0)
+			|| groundConfig.showHighlightedOnly())
 		{
 			return null;
 		}
@@ -93,13 +93,13 @@ public class HaProfitGroundOverlay extends Overlay
 				continue;
 			}
 
-			// Unprofitable drops still occupy a line in the original overlay.
+			// Drops that do not meet the HA-GE threshold still occupy a line.
 			int offset = offsetMap.compute(drop.layer.getWorldLocation(),
 				(k, old) -> old == null ? 0 : old + 1);
 
 			if (drop.itemId == ItemID.COINS || !drop.tradeable
 				|| drop.geEach <= 0 || drop.haEach <= 0
-				|| drop.profitPerItem(plugin.getNatureRunePrice()) < config.minProfit())
+				|| drop.haMinusGePerItem() < config.minProfit())
 			{
 				continue;
 			}

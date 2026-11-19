@@ -13,7 +13,7 @@ public interface HaProfitGroundConfig extends Config
 	@ConfigItem(
 		keyName = "natureRuneGePrice",
 		name = "Nature rune GE price (auto)",
-		description = "Current Nature rune price used for the calculation. Updated automatically; manual edits are ignored.",
+		description = "Current Nature rune GE price for reference only. It is not subtracted from HA-GE. Updated automatically; manual edits are ignored.",
 		position = 0
 	)
 	default String natureRuneGePrice()
@@ -23,8 +23,8 @@ public interface HaProfitGroundConfig extends Config
 
 	@ConfigItem(
 		keyName = "profitColor",
-		name = "Profitable HA color",
-		description = "Color of the entire profitable (HA: ...) segment, leaving GE unchanged",
+		name = "HA highlight color",
+		description = "Color of the entire (HA: ...) segment when HA-GE meets the threshold, leaving GE unchanged",
 		position = 2
 	)
 	@Alpha
@@ -35,13 +35,13 @@ public interface HaProfitGroundConfig extends Config
 
 	@ConfigItem(
 		keyName = "minProfit",
-		name = "Color HA from profit (gp)",
-		description = "HA minus GE minus Nature rune per item. 1 = highlight any positive profit",
+		name = "Minimum HA - GE (gp)",
+		description = "Minimum HA minus GE per item. 0 = green when HA equals or exceeds GE. Nature rune is not deducted.",
 		position = 1
 	)
-	@Range(min = 1)
+	@Range(min = 0)
 	default int minProfit()
 	{
-		return 1;
+		return 0;
 	}
 }

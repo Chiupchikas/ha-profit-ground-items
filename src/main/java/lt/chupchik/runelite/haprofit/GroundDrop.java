@@ -34,8 +34,8 @@ final class GroundDrop
 		return geEach * quantity;
 	}
 
-	long profitPerItem(long natureRunePrice)
+	long haMinusGePerItem()
 	{
-		return (long) haEach - geEach - natureRunePrice;
+		return (long) haEach - geEach;
 	}
 }

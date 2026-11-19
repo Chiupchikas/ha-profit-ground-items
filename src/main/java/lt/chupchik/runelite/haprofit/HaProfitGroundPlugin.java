@@ -25,7 +25,7 @@ import net.runelite.client.ui.overlay.OverlayManager;
 
 @PluginDescriptor(
 	name = "HA Profit Ground Items",
-	description = "Color profitable HA values inside Ground Items labels",
+	description = "Color HA values when HA is at least GE inside Ground Items labels",
 	tags = {"ground", "loot", "alchemy", "profit"},
 	internalName = "ha-profit-ground-items"
 )
