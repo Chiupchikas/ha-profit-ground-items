@@ -31,9 +31,13 @@ import net.runelite.client.ui.overlay.OverlayManager;
 )
 public class HaProfitGroundPlugin extends Plugin
 {
+	private static final String CONFIG_GROUP = "chupchik-ha-profit-ground";
+	private static final String RUNE_PRICE_KEY = "natureRuneGePrice";
+
 	@Inject private ItemManager itemManager;
 	@Inject private OverlayManager overlayManager;
 	@Inject private HaProfitGroundOverlay overlay;
+	@Inject private ConfigManager configManager;
 
 	// Match the iteration order used by RuneLite's built-in Ground Items plugin.
 	private final Table<WorldPoint, Integer, GroundDrop> drops = HashBasedTable.create();
@@ -51,6 +55,7 @@ public class HaProfitGroundPlugin extends Plugin
 		drops.clear();
 		// Item prices require the client thread; onGameTick will populate this value.
 		natureRunePrice = 0L;
+		updateNatureRunePriceDisplay();
 		overlayManager.add(overlay);
 	}
 
@@ -59,6 +64,8 @@ public class HaProfitGroundPlugin extends Plugin
 	{
 		overlayManager.remove(overlay);
 		drops.clear();
+		natureRunePrice = 0L;
+		configManager.setConfiguration(CONFIG_GROUP, RUNE_PRICE_KEY, "Plugin disabled");
 	}
 
 	Collection<GroundDrop> getDrops()
@@ -76,6 +83,16 @@ public class HaProfitGroundPlugin extends Plugin
 	{
 		// Work outside the frame-render loop.
 		natureRunePrice = itemManager.getItemPrice(ItemID.NATURERUNE);
+		updateNatureRunePriceDisplay();
+	}
+
+	private void updateNatureRunePriceDisplay()
+	{
+		String value = natureRunePrice > 0 ? natureRunePrice + " gp" : "Waiting for game tick...";
+		if (!value.equals(configManager.getConfiguration(CONFIG_GROUP, RUNE_PRICE_KEY)))
+		{
+			configManager.setConfiguration(CONFIG_GROUP, RUNE_PRICE_KEY, value);
+		}
 	}
 
 	@Subscribe
