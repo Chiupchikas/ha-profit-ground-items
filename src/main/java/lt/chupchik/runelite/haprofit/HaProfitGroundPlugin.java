@@ -27,7 +27,7 @@ import net.runelite.client.ui.overlay.OverlayManager;
 	name = "HA Profit Ground Items",
 	description = "Color profitable HA values inside Ground Items labels",
 	tags = {"ground", "loot", "alchemy", "profit"},
-	internalName = "chupchik-ha-profit-ground"
+	internalName = "ha-profit-ground-items"
 )
 public class HaProfitGroundPlugin extends Plugin
 {
